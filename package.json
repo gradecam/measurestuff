@@ -1,0 +1,15 @@
+{
+  "name": "measurestuff",
+  "version": "0.0.1",
+  "description": "Measure the things -- drop-in module for adding instrumentation to an existing node.js server app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Richard Bateman <rbateman@gradecam.com>",
+  "license": "ISC",
+  "dependencies": {
+    "flamegraph": "^0.7.0",
+    "v8-profiler": "^5.5.0"
+  }
+}
