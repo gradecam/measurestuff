@@ -7,7 +7,7 @@ var pkg = require('./package.json');
 var flamegraph = require('flamegraph');
 
 var verbose = false;
-
+var defaultSeconds = 60;
 var nextId = 0;
 
 function endProfiling(id, cb) {
@@ -54,7 +54,7 @@ var routes = {
         setImmediate(exportHeapSnapshot, req, res);
     },
     'profile.cpuprofile': function getCPUProfile(req, res, query) {
-        var seconds = query.seconds || 60;
+        var seconds = query.seconds || defaultSeconds;
 
         var fname = new Date().getTime() + "_" + seconds + "s.cpuprofile";
         res.writeHead('200', {
@@ -69,7 +69,7 @@ var routes = {
         });
     },
     'profile.svg': function getCPUProfile(req, res, query) {
-        var seconds = query.seconds || 60;
+        var seconds = query.seconds || defaultSeconds;
 
         var fname = new Date().getTime() + "_" + seconds + "s.svg";
         res.writeHead('200', {
@@ -93,6 +93,11 @@ function measureServer(config) {
     if (config.verbose) { verbose = config.verbose; }
     config = config || {};
     var port = config.port || 12345;
+    if (config.seconds) { defaultSeconds = Number(config.seconds); }
+    if (isNaN(defaultSeconds)) {
+        console.warn("Invalid default profiling seconds parameter! Defaulting to 60");
+        defaultSeconds = 60;
+    }
     console.warn(" >> measurestuff profiling helper listening on port", port);
     var server = http.createServer().listen(port);
     server.on('request', function measureServerOnRequest(req, res) {

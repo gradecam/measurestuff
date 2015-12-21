@@ -31,6 +31,7 @@ When you start the server you can pass in a config object.  The defaults are:
 ``` js
 require('measurestuff')({
     port: 12345,        // change this to override the port for the HTTP server
+    defaultSeconds: 60, // change this to set the default length for new CPU profiles in seconds
     verbose: false      // set to `true` to get extra (fairly minimal).
 })
 ```
@@ -42,8 +43,8 @@ NOTE: **CPU profiling will only help if your performance issue is CPU-bound; if 
 bound then you probably won't find anything useful here.**
 
 CPU profiles run for a given period of time and then report back.  All APIs default to 60 seconds,
-but this can be overridden with the `seconds` GET parameter.  For example, `?seconds=15` will set it
-to run for 15 seconds.
+but the default can be overridden in the config passed into the module or for each request with
+the `seconds` GET parameter.  For example, `?seconds=15` will set it to run for 15 seconds.
 
 ## cpuprofile file
 
