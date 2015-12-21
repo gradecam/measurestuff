@@ -1,6 +1,6 @@
 {
   "name": "measurestuff",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Measure the things -- drop-in module for adding instrumentation to an existing node.js server app",
   "main": "index.js",
   "scripts": {
