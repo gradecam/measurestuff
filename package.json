@@ -2,6 +2,7 @@
   "name": "measurestuff",
   "version": "0.1.0",
   "description": "Measure the things -- drop-in module for adding instrumentation to an existing node.js server app",
+  "url": "https://github.com/gradecam/measurestuff",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,5 +12,22 @@
   "dependencies": {
     "flamegraph": "^0.7.0",
     "v8-profiler": "^5.5.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/gradecam/measurestuff/issues/new"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/gradecam/measurestuff.git"
+  },
+  "keywords": [
+    "v8-profiler",
+    "cpuprofile",
+    "heapsnapshot",
+    "cpu profile",
+    "heap snapshot",
+    "performance tuning",
+    "flame graph"
+  ],
+  "homepage": "https://github.com/gradecam/measurestuff"
 }
