@@ -72,15 +72,21 @@ var routes = {
         var seconds = query.seconds || defaultSeconds;
 
         var fname = new Date().getTime() + "_" + seconds + "s.svg";
-        res.writeHead('200', {
-            "Content-Type": "image/svg+xml",
-            "Content-Disposition": 'inline; filename="' + fname + '"'
-        });
-
         runProfile(seconds, function sendProfileToBrowser(p) {
             if (verbose) { console.log("Generating flamegraph"); }
             p.export(function makeFlamegraph(err, pText) {
+                if (err) {
+                    console.warn("Flamegraph generation failed!", err, err.stack);
+                    res.writeHead('500');
+                    res.end("Could not generate flamegraph!");
+                    return;
+                }
                 if (verbose) { console.log("Sending flamegraph to caller"); }
+                res.writeHead('200', {
+                    "Content-Type": "image/svg+xml",
+                    "Content-Disposition": 'inline; filename="' + fname + '"'
+                });
+
                 var svg = flamegraph([ pText ], {inputtype:'cpuprofile'});
                 res.end(svg);
                 setImmediate(releaseProfile, p);
