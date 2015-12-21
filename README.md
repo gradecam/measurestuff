@@ -1,6 +1,9 @@
 # measurestuff
 
-A drop-in tool to make CPU profiling and heap snapshots easy on web applications
+A drop-in tool to make CPU profiling and heap snapshots easy on web applications.
+
+When you add `measurestuff` to your application it opens an additional HTTP port which can
+be used to trigger CPU profiling (either as a .cpuprofile or a flame graph) and get heap snapshots.
 
 # getting started
 
@@ -17,9 +20,20 @@ require('measurestuff')({port: 12345, verbose: true});
 
 ```
 
-When you start your application, if you set , you'll then see:
+When you start your application, if you set the port to the default (12345), you'll then see:
 
     >> measurestuff profiling helper listening on port 12345
+
+## config options
+
+When you start the server you can pass in a config object.  The defaults are:
+
+``` js
+require('measurestuff')({
+    port: 12345,        // change this to override the port for the HTTP server
+    verbose: false      // set to `true` to get extra (fairly minimal).
+})
+```
 
 # CPU profiling
 
