@@ -95,6 +95,8 @@ var routes = {
     }
 };
 
+var server = http.createServer();
+
 function measureServer(config) {
     if (config.verbose) { verbose = config.verbose; }
     config = config || {};
@@ -105,7 +107,7 @@ function measureServer(config) {
         defaultSeconds = 60;
     }
     console.warn(" >> measurestuff profiling helper listening on port", port);
-    var server = http.createServer().listen(port);
+    server.listen(port);
     server.on('request', function measureServerOnRequest(req, res) {
         if (verbose) { console.log("Profiling helper HTTP request to ", req.method, req.url); }
         var parts = url.parse(req.url, true);
@@ -118,6 +120,10 @@ function measureServer(config) {
             res.end("Page not found. measurestuff version " + pkg.version + "\n");
         }
     });
+}
+
+measureServer.close = (cb) => {
+    server.close(cb);
 }
 
 module.exports = measureServer;
