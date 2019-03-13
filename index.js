@@ -1,7 +1,7 @@
 
 var http = require('http');
 var url = require('url');
-var profiler = require('v8-profiler');
+var profiler = require('v8-profiler-next');
 var path = require('path');
 var pkg = require('./package.json');
 var flamegraph = require('flamegraph');
@@ -98,8 +98,8 @@ var routes = {
 var server = http.createServer();
 
 function measureServer(config) {
-    if (config.verbose) { verbose = config.verbose; }
     config = config || {};
+    if (config.verbose) { verbose = config.verbose; }
     var port = config.port || 12345;
     if (config.seconds) { defaultSeconds = Number(config.seconds); }
     if (isNaN(defaultSeconds)) {
@@ -123,7 +123,7 @@ function measureServer(config) {
 }
 
 measureServer.close = (cb) => {
-    server.close(cb);
+    return server.close(cb);
 }
 
 module.exports = measureServer;
