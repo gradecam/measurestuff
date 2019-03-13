@@ -4,6 +4,7 @@
   "description": "Measure the things -- drop-in module for adding instrumentation to an existing node.js server app",
   "url": "https://github.com/gradecam/measurestuff",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
