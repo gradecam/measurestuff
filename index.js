@@ -63,7 +63,7 @@ var routes = {
         });
 
         runProfile(seconds, function sendProfileToBrowser(p) {
-            p.export().pipe(outputStream).on('finish', function deleteProfile() {
+            p.export().pipe(res).on('finish', function deleteProfile() {
                 setImmediate(releaseProfile, p);
             });
         });
