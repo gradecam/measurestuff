@@ -10,4 +10,7 @@ declare module 'measurestuff' {
         (config?: MeasureStuffConfig) : void;
         close(cb?: (err?: Error) => void) : Server;
     }
+
+    const server: MeasureStuffServer;
+    export = server;
 }
