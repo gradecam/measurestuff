@@ -24,6 +24,21 @@ function runProfile(seconds, cb) {
 
     setTimeout(endProfiling, 1000 * seconds, id, cb);
 }
+function endHeapProfiling(cb) {
+    try {
+        const hp = profiler.stopSamplingHeapProfiling();
+        cb(null, hp);    
+    } catch (err) {
+        cb(err);
+    }
+}
+function runHeapProfile(seconds, cb) {
+    if (verbose) { console.log("Starting Heap sampling profiling for", seconds, "seconds."); }
+    setImmediate(profiler.startSamplingHeapProfiling);
+    var done = false;
+
+    setTimeout(endHeapProfiling, 1000 * seconds, cb);
+}
 
 function releaseProfile(p) {
     if (verbose) { console.log("Releasing CPU profile"); }
@@ -68,6 +83,24 @@ var routes = {
             });
         });
     },
+    'profile.heapprofile': function exportHeapSnapshot(req, res, query) {
+        var seconds = query.seconds || defaultSeconds;
+
+        var fname = new Date().getTime() + "_" + seconds + "s.heapprofile";
+        res.writeHead('200', {
+            "Content-Type": "application/json",
+            "Content-Disposition": 'attachment; filename="' + fname + '"'
+        });
+
+        runHeapProfile(seconds, function sendProfileToBrowser(err, profile) {
+            if (err) {
+                console.warn("Error getting heap profile:", err);
+            }
+            res.write(JSON.stringify(profile));
+            res.end();
+        });
+    },
+    
     'profile.svg': function getCPUProfile(req, res, query) {
         var seconds = query.seconds || defaultSeconds;
 
@@ -125,5 +158,7 @@ function measureServer(config) {
 measureServer.close = (cb) => {
     return server.close(cb);
 }
+
+measureServer.default = measureServer;
 
 module.exports = measureServer;

@@ -80,3 +80,11 @@ For example, if you kept the default `12345` port and are debugging locally, you
 `http://localhost:12345/currentHeap.heapsnapshot`. The request would return immediately but the
 response may be rather large.
 
+# Heap allocation profiling
+
+You can run a Sampling Heap profile by making a HTTP GET request for `/profile.heapprofile`. 
+This is a new feature that I don't have a lot of experience with yet, but should be useful.
+
+Heap sampling profiles run for a given period of time and then report back.  All APIs default to 60
+seconds, but the default can be overridden in the config passed into the module or for each request
+with the `seconds` GET parameter.  For example, `?seconds=15` will set it to run for 15 seconds.
